@@ -2,3 +2,4 @@ pytest
 playwright
 pytest-playwright
 pytest-base-url
+allure-pytest
