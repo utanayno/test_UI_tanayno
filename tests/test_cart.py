@@ -1,6 +1,5 @@
 def test_header_title(cart_page):
     cart_page.open_page()
-    assert False, "Проверка скриншота"
     cart_page.check_cart_title_is('Order overview')
 
 
