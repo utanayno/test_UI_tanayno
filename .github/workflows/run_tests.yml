@@ -28,6 +28,8 @@ jobs:
           python-version: '3.13'
       - name: Install dependencies
         run: pip install -r requirements.txt
+      - name: Install Playwright browsers
+        run: playwright install --with-deps chromium
       - name: run tests
         run: python -m pytest
         
