@@ -1,13 +1,18 @@
+import pytest
+
+@pytest.mark.smoke
 def test_header_title(cart_page):
     cart_page.open_page()
     cart_page.check_cart_title_is('Order overview')
 
 
+@pytest.mark.extended
 def test_empty_cart(cart_page):
     cart_page.open_page()
     cart_page.check_cart_alert('Your cart is empty!')
 
 
+@pytest.mark.smoke
 def test_delete_from_cart(cart_page, catalog_category_page):
     catalog_category_page.open_page()
     catalog_category_page.add_to_cart()
@@ -17,6 +22,7 @@ def test_delete_from_cart(cart_page, catalog_category_page):
     cart_page.check_cart_alert('Your cart is empty!')
 
 
+@pytest.mark.regression
 def test_change_item_quantity(cart_page, catalog_category_page):
     catalog_category_page.open_page()
     catalog_category_page.add_to_cart()
