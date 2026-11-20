@@ -30,6 +30,16 @@ jobs:
         run: pip install -r requirements.txt
       - name: Install Playwright browsers
         run: playwright install --with-deps chromium
-      - name: run tests
+      - name: run all tests
+        if: "github.event.inputs.deployment_target == 'all'"
         run: python -m pytest
+      - name: run smoke tests
+        if: "github.event.inputs.deployment_target == 'smoke'"
+        run: python -m pytest -m smoke
+      - name: run regression tests
+        if: "github.event.inputs.deployment_target == 'regression'"
+        run: python -m pytest -m regression
+      - name: run extended tests
+        if: "github.event.inputs.deployment_target == 'extended'"
+        run: python -m pytest -m extended
         
