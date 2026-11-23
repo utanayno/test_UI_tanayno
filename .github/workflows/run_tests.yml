@@ -32,14 +32,29 @@ jobs:
         run: playwright install --with-deps chromium
       - name: run all tests
         if: "github.event.inputs.deployment_target == 'all'"
-        run: python -m pytest
+        run: python -m pytest --alluredir=allure-results
       - name: run smoke tests
         if: "github.event.inputs.deployment_target == 'smoke'"
-        run: python -m pytest -m smoke
+        run: python -m pytest -m smoke --alluredir=allure-results
       - name: run regression tests
         if: "github.event.inputs.deployment_target == 'regression'"
-        run: python -m pytest -m regression
+        run: python -m pytest -m regression --alluredir=allure-results
       - name: run extended tests
         if: "github.event.inputs.deployment_target == 'extended'"
-        run: python -m pytest -m extended
+        run: python -m pytest -m extended --alluredir=allure-results
+      - name: Install Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: microsoft
+          java-version: '25'
+      - name: Install allure
+        run: sudo wget https://github.com/allure-framework/allure2/releases/download/2.46.2/allure-2.46.2.tgz && sudo tar -zxvf allure-2.46.2.tgz -C /opt/ && sudo ln -s /opt/allure-2.46.2/bin/allure /usr/bin/allure
+      - name: generate report
+        run: allure generate -c allure-results -o allure report
+      - name: save allure report
+        uses: actions/upload-artifact@v7
+        with:
+          name: allure report
+          path: allure report
+          retention-days: 1
         
